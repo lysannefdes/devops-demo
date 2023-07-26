@@ -34,7 +34,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
             labels: "approval-pending"
             message: "Please review and approve the merge to main branch."
 
