@@ -1,0 +1,45 @@
+name: Merge to Main Branch
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1' # Schedule for every Monday at 12 am UTC
+
+jobs:
+  merge_to_main:
+    name: Merge to Main Branchs
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+  
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.x
+  
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+  
+        - name: Run tests
+          run: python -m unittest discover
+
+        # Wait for manual approval
+        - name: Wait for approval
+          id: approval
+          uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            labels: "approval-pending"
+            message: "Please review and approve the merge to main branch."
+
+        # Merge to main branch
+        - name: Merge to main
+          if: steps.approval.outputs.approved == 'true'
+          run: |
+            git checkout add_feature
+            git merge main
+            git push origin main
