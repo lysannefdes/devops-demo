@@ -3,7 +3,7 @@ name: Merge to Main Branch
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 1' # Schedule for every Monday at 12 am UTC
+    - cron: '*/1 * * * *' # Schedule for every Monday at 12 am UTC
 
 jobs:
   merge_to_main:
@@ -31,8 +31,10 @@ jobs:
         - name: Wait for approval
           id: approval
           uses: "marvinpinto/action-automatic-releases@latest"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
             labels: "approval-pending"
             message: "Please review and approve the merge to main branch."
 
