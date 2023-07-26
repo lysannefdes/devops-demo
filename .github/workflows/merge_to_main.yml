@@ -7,7 +7,7 @@ on:
 
 jobs:
   merge_to_main:
-    name: Merge to Main Branch
+    name: Merge to Main Branchs
     runs-on: ubuntu-latest
 
     steps:
@@ -40,6 +40,6 @@ jobs:
         - name: Merge to main
           if: steps.approval.outputs.approved == 'true'
           run: |
-            git checkout develop
+            git checkout add_feature
             git merge main
             git push origin main
