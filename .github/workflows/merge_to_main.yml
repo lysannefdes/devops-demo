@@ -3,7 +3,7 @@ name: Merge to Main Branch
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 1' # Schedule for every Monday at 12 am UTC
+    - cron: '*/1 * * * *' # Schedule for every Monday at 12 am UTC
 
 jobs:
   merge_to_main:
